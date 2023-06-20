@@ -1,0 +1,10 @@
+[flake8]
+exclude = 
+    env
+    .env
+    ./env
+    env/
+    .env/
+    .venv
+    .venv/
+ignore = E402, E501, W291, E121, F401, F811, F841
