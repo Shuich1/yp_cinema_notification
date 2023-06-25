@@ -1,0 +1,80 @@
+version: "3.9"
+services:
+  # Notificator service
+  notificator:
+    build:
+      context: ../notificator
+      dockerfile: Dockerfile
+    expose:
+      - "5000"
+    depends_on:
+      - notificator_postgres
+      - rabbitmq
+    networks:
+      - online_cinema_network
+    env_file:
+      - ../.env
+    restart: always
+
+  # Notificator PostgreSQL database
+  notificator_postgres:
+    image: postgres:15.1
+    expose:
+      - "5432"
+    env_file:
+      - ../.env
+    environment:
+      POSTGRES_USER: ${NOTIFICATION_PG_USER}
+      POSTGRES_PASSWORD: ${NOTIFICATION_PG_PASSWORD}
+      POSTGRES_DB: notification
+    networks:
+      - online_cinema_network
+    volumes:
+      - ../notificator_postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ../notification_data:/var/lib/postgresql/data
+    restart: always
+
+  # Events Consumer service
+  events_consumer:
+    container_name: 'events_consumer'
+    build:
+      context: ../events_consumer
+    env_file:
+      - ../.env
+    depends_on:
+      - rabbitmq
+    networks:
+      - online_cinema_network
+    restart: always
+
+  # RabbitMQ service
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: 'rabbitmq'
+    healthcheck:
+      test: rabbitmq-diagnostics -q status
+      interval: 30s
+      timeout: 30s
+      retries: 3
+    volumes:
+      - ../rabbitmq/:/var/lib/rabbitmq/
+      - ../rabbitmq/log/:/var/log/rabbitmq/
+    networks:
+      - online_cinema_network
+    restart: always
+
+  tests:
+    build:
+      context: ../tests/
+      dockerfile: Dockerfile
+    depends_on:
+      - notificator_postgres
+      - events_consumer
+    networks:
+      - online_cinema_network
+    env_file:
+      - ../.env
+ 
+networks:
+  online_cinema_network:
+    driver: bridge
