@@ -14,6 +14,7 @@ services:
       - online_cinema_network
     env_file:
       - ./.env
+    restart: always
 
   # Notificator PostgreSQL database
   notificator_postgres:
@@ -62,6 +63,18 @@ services:
       - online_cinema_network
     restart: always
 
+  tests:
+    build:
+      context: ./tests/
+      dockerfile: Dockerfile
+    depends_on:
+      - notificator_postgres
+      - events_consumer
+    networks:
+      - online_cinema_network
+    env_file:
+      - ./.env
+ 
 networks:
   online_cinema_network:
     driver: bridge

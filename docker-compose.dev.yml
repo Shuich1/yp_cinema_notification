@@ -6,7 +6,7 @@ services:
       - "5000:5000"
   notificator_postgres:
     ports:
-      - "5433:5432"
+      - "5432:5432"
   rabbitmq:
     ports:
       - "5672:5672"
