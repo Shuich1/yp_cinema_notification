@@ -16,6 +16,7 @@ RUN pip install --upgrade pip \
 
 # Копирование остальных файлов
 COPY app.py app.py
+COPY src src
 
 # Добавление разрешений для выполнения скрипта
 RUN chmod +x run_uwsgi.sh

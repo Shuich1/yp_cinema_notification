@@ -164,3 +164,4 @@ notification_data/
 rabbitmq/log/
 rabbitmq/mnesia/
 .erlang.cookie
+.DS_Store

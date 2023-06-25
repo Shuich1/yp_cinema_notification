@@ -1,5 +1,5 @@
 [flake8]
-exclude = 
+exclude =
     env
     .env
     ./env
@@ -8,3 +8,4 @@ exclude =
     .venv
     .venv/
 ignore = E402, E501, W291, E121, F401, F811, F841
+max-line-length = 120

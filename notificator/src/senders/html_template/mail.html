@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        .email-container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+        }
+        .email-header {
+            text-align: center;
+            background-color: #ff5252;
+            color: white;
+            padding: 10px 0;
+            border-radius: 10px 10px 0 0;
+        }
+        .email-header h1 {
+            margin: 0;
+        }
+        .email-header img {
+            max-width: 200px;
+        }
+        .email-body {
+            margin-top: 20px;
+        }
+        .cta-button {
+            background-color: #ff5252;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            display: inline-block;
+            margin: 20px 0;
+        }
+        .special-offer {
+            background-color: #ffe0e0;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            margin: 20px 0;
+        }
+        .footer {
+            font-size: 0.8em;
+            color: #888;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="email-header">
+            <h1>Hi {{recipient_name}}, {{title}}</h1>
+            <img src="{{image}}" alt="Movie Image">
+        </div>
+        <div class="email-body">
+            <p>{{text}}</p>
+            <a href="{{cta_link}}" class="cta-button">{{cta_text}}</a>
+            <div class="special-offer">
+                <h2>Special Offer!</h2>
+                <p>{{special_offer}}</p>
+            </div>
+        </div>
+        <div class="footer">
+            <p>Our mailing address is: [Your Address]</p>
+            <p>Want to change how you receive these emails? You can <a href="{{unsubscribe_link}}">update your preferences</a> or <a href="{{unsubscribe_link}}">unsubscribe</a>.</p>
+        </div>
+    </div>
+</body>
+</html>
