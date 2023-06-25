@@ -12,8 +12,8 @@ services:
       - rabbitmq
     networks:
       - online_cinema_network
-    env debug_file:
-      - ../.env debug
+    env_file:
+      - ../.env_debug
     restart: always
 
   # Notificator PostgreSQL database
@@ -21,11 +21,11 @@ services:
     image: postgres:15.1
     expose:
       - "5432"
-    env debug_file:
-      - ../.env debug
-    env debugironment:
-      POSTGRES_USER: ${NOTIFICATION_PG_USER}
-      POSTGRES_PASSWORD: ${NOTIFICATION_PG_PASSWORD}
+    env_file:
+      - ../.env_debug
+    environment:
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: 123qwe
       POSTGRES_DB: notification
     networks:
       - online_cinema_network
@@ -39,8 +39,8 @@ services:
     container_name: 'events_consumer'
     build:
       context: ../events_consumer
-    env debug_file:
-      - ../.env debug
+    env_file:
+      - ../.env_debug
     depends_on:
       - rabbitmq
     networks:
@@ -63,7 +63,8 @@ services:
       - online_cinema_network
     restart: always
 
-  tests:
+  notification-tests:
+    container_name: notification-tests
     build:
       context: ../tests/
       dockerfile: Dockerfile
@@ -72,8 +73,8 @@ services:
       - events_consumer
     networks:
       - online_cinema_network
-    env debug_file:
-      - ../.env debug
+    env_file:
+      - ../.env_debug
  
 networks:
   online_cinema_network:
